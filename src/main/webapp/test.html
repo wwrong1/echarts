@@ -30,38 +30,40 @@
     //     }
     // })
 
-    $.get('/getValue', function (data){
-        handler(data)
+    $.get('/getOption', function (data){
+        myChart.setOption(data)
+        // handler(data)
     })
 
-    function handler(data) {
-        myChart.setOption({
-            grid3D: {},
-            xAxis3D: {},
-            yAxis3D: {},
-            zAxis3D: {},
-            dataset: {
-                dimensions: [
-                    'NumOfThreads',
-                    'SumOfPerBatch',
-                    'Time',
-                ],
-                source:
-                    data
-            },
-            series: [
-                {
-                    type: 'scatter3D',
-                    symbolSize: 2.5,
-                    encode: {
-                        x: 'NumOfThreads',
-                        y: 'SumOfPerBatch',
-                        z: 'Time',
-                    }
-                }
-            ]
-        })
-    }
+    // function handler(data) {
+    //     myChart.setOption({
+    //         grid3D: {},
+    //         xAxis3D: {},
+    //         yAxis3D: {},
+    //         zAxis3D: {},
+    //         dataset: {
+    //             dimensions: [
+    //                 'NumOfThreads',
+    //                 'SumOfPerBatch',
+    //                 'Time',
+    //             ],
+    //             source:[[1,2,3,],[2,3,6],[1,4,5],[5,6,8]]
+    //                 // data
+    //
+    //         },
+    //         series: [
+    //             {
+    //                 type: 'scatter3D',
+    //                 symbolSize: 2.5,
+    //                 encode: {
+    //                     x: 'NumOfThreads',
+    //                     y: 'SumOfPerBatch',
+    //                     z: 'Time',
+    //                 }
+    //             }
+    //         ]
+    //     })
+    // }
 
 </script>
 </body>

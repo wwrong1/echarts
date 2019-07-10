@@ -1,15 +1,13 @@
 package com.wwr.echarts.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wwr.echarts.mapper.ChartDataMapper;
-import com.wwr.echarts.model.ChartData;
+import com.wwr.echarts.api.GetChartJsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+
 
 /**
  * Created by Administrator on 2018/12/3.
@@ -18,7 +16,7 @@ import java.util.List;
 public class TestController {
 
     @Autowired
-    ChartDataMapper chartDataMapper;
+    private GetChartJsonService getChartJsonService;
 
     @RequestMapping("/testEcharts")
     public String test(){
@@ -28,17 +26,9 @@ public class TestController {
     }
 
 
-    @RequestMapping("/getValue")
+    @RequestMapping("/getOption")
     @ResponseBody
-    public long [][] getOption(){
-        JSONArray result = new JSONArray();
-        List<ChartData> dataList = chartDataMapper.getAll();
-        long [][] s = new long[dataList.size()][3];
-        for(int i =0; i <dataList.size();i++){
-            ChartData data = dataList.get(i);
-            long [] m = {data.getX(),data.getY(),data.getZ()};
-            s[i] = m;
-        }
-        return s;
+    public JSONObject getOption(){
+        return getChartJsonService.getChartJson();
     }
 }
