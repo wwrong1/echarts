@@ -4,11 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.wwr.echarts.api.GetChartJsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -17,10 +17,15 @@ public class TestController {
     @Autowired
     private GetChartJsonService getChartJsonService;
 
-    @RequestMapping("/testEcharts")
-    public String test(){
-        System.out.println("\u7fa1\u6155");
-        return "test";//option.toJSONString();
+    @RequestMapping(value="/testEcharts/{title}/{shape}", method = RequestMethod.GET)
+
+    public ModelAndView test(/**HttpServletRequest request**/@PathVariable("title")  String title, @PathVariable("shape")String shape){
+//        model.addAttribute("url","/getOption/45/bar");
+        ModelAndView mav = new ModelAndView("test");
+//        request.setAttribute("url","/getOption/45/bar");
+        mav.addObject("url","/getOption/"+title+"/"+shape);
+        return mav;
+//        return "test";
     }
 
 
@@ -29,4 +34,5 @@ public class TestController {
     public JSONObject getOption(@PathVariable("title")  String title, @PathVariable("shape")String shape){
         return getChartJsonService.getChartJson(title,shape);
     }
+
 }

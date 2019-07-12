@@ -1,13 +1,14 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=utf8" language="java" isELIgnored="false"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta charset="utf-8">
     <title>ECharts</title>
     <!-- 引入 echarts.js -->
     <script type="text/javascript" src="/js/echarts.js"></script>
     <script src="/js/echarts-gl.js"></script>
-    <script src="http://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="/js/jquery-1.8.2.min.js"
+           ></script>
 
 </head>
 <body>
@@ -15,12 +16,28 @@
 <div id="main" style="width: 600px;height:600px;"></div>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
+
     var myChart = echarts.init(document.getElementById('main'));
+    var a = {
+        type: "get",
+        url: "",
+        data: {},
+        success: function (result) {
+            console.log(result);
+            myChart.setOption(result)
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    };
+    a.url="${url}"
+        <%--"<%=request.getAttribute("url")%>"--%>
+    $.ajax(a)
 
     // option = {
     //     title : {
     //         text: '某站点用户访问来源',
-    //         subtext: '纯属虚构',
+    //         subtext: "",
     //         x:'center'
     //     },
     //     tooltip : {
@@ -58,30 +75,18 @@
     //         }
     //     ]
     // };
-    // option.dataset.source=[[ '直接',335],
-    //     [ '邮件',310],
-    //     [ '联盟',234],
-    //     [ '视频',135],
-    //     ['搜擎',1548]]
+    // myChart.setOption(option)
 
-    $.ajax({
-        type: "get",
-        url: "/getOption/45/bar",
-        data: {},
-        success: function (result) {
-            console.log(result);
-            myChart.setOption(result)
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    })
 
-    // $.get('/getOption/示例/pie"').done(function (data){
+
+
+    // var url='${url}'
+    //
+    // $.get(url).done(function (data){
     //     myChart.setOption(data)
     //     // handler(data)
     // })
-    myChart.setOption(option)
+
 
 
     // function handler(data) {
