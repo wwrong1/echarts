@@ -12,28 +12,77 @@
 </head>
 <body>
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="width: 1000px;height:1000px;"></div>
+<div id="main" style="width: 600px;height:600px;"></div>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
 
-    // $.ajax({
-    //     type: "get",
-    //     url: "/getValue",
-    //     data: {},
-    //     success: function (result) {
-    //         console.log(result);
-    //         handler(result);
+    // option = {
+    //     title : {
+    //         text: '某站点用户访问来源',
+    //         subtext: '纯属虚构',
+    //         x:'center'
     //     },
-    //     error: function (error) {
-    //         console.log(error);
-    //     }
-    // })
+    //     tooltip : {
+    //         trigger: 'item',
+    //         formatter: "{a} <br/> {c} ({d}%)"
+    //     },
+    //     dataset:{
+    //         source:[
+    //             [ '直接访问',335],
+    //             [ '邮件营销',310],
+    //             [ '联盟广告',234],
+    //             [ '视频广告',135],
+    //             ['搜索引擎',1548]
+    //             ,]
+    //     },
+    //     legend: {
+    //         orient: 'vertical',
+    //         left: 'left',
+    //         data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+    //     },
+    //     series : [
+    //         {
+    //             name: '访问来源',
+    //             type: 'pie',
+    //             radius : '55%',
+    //             center: ['50%', '60%'],
+    //
+    //             itemStyle: {
+    //                 emphasis: {
+    //                     shadowBlur: 10,
+    //                     shadowOffsetX: 0,
+    //                     shadowColor: 'rgba(0, 0, 0, 0.5)'
+    //                 }
+    //             }
+    //         }
+    //     ]
+    // };
+    // option.dataset.source=[[ '直接',335],
+    //     [ '邮件',310],
+    //     [ '联盟',234],
+    //     [ '视频',135],
+    //     ['搜擎',1548]]
 
-    $.get('/getOption', function (data){
-        myChart.setOption(data)
-        // handler(data)
+    $.ajax({
+        type: "get",
+        url: "/getOption/45/bar",
+        data: {},
+        success: function (result) {
+            console.log(result);
+            myChart.setOption(result)
+        },
+        error: function (error) {
+            console.log(error);
+        }
     })
+
+    // $.get('/getOption/示例/pie"').done(function (data){
+    //     myChart.setOption(data)
+    //     // handler(data)
+    // })
+    myChart.setOption(option)
+
 
     // function handler(data) {
     //     myChart.setOption({
