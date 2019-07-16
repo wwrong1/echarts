@@ -26,6 +26,7 @@ public class GetChartServiceImpl implements GetChartService {
     private ChartMapper chartMapper;
 
     @Override
+    //获取画图所需的json数据
     public JSONObject getChartJson(String title,String type) {
 
         //获取图数据
@@ -55,6 +56,7 @@ public class GetChartServiceImpl implements GetChartService {
     }
 
     @Override
+    //存储特定chart的配置所需数据，并返回该条数据在数据库中的id
     public int saveChart(String org, String sql, String title, String type, String xAxis, String remake) {
 
         Chart chart = new Chart(org,sql,title,type,xAxis,remake);
@@ -65,6 +67,7 @@ public class GetChartServiceImpl implements GetChartService {
     }
 
     @Override
+    //查看数据表中某个特定组织的全部chart配置数据
     public String queryChart(String org) {
         List<Chart> l = chartMapper.getOrgAll(org);
         String s = "";
