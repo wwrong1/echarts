@@ -1,4 +1,4 @@
-package com.wwr.echarts.api;
+package com.wwr.echarts.service;
 
 import com.wwr.echarts.model.ChartData;
 

@@ -6,7 +6,10 @@ public class Chart {
     private String sql_str;
     private String title;
     private String type;
+
+    //要求存入数据库中的X轴的参数之间有且只有一个空格分隔开
     private String xAxis;
+
     private String remake;
 
     public Chart() {
@@ -80,7 +83,8 @@ public class Chart {
     @Override
     public String toString() {
 
-        String str = "id:"+this.id+", org:"+this.org+", sql_str:"+this.sql_str +", title:"+this.title+", type:"+this.type+", xAxis:"+this.xAxis+", remake:"+this.remake+"\n";
+        String str = "id:"+this.id+", org:"+this.org+", sql_str:"+this.sql_str +", title:"+this.title+", type:"+this.type+
+                ", xAxis:"+this.xAxis+", remake:"+this.remake+"\n";
         return str;
     }
 }

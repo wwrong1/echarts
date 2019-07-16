@@ -24153,7 +24153,7 @@ function renderTaskPlan(context) {
 function renderTaskReset(context) {
     var seriesModel = context.model;
     var ecModel = context.ecModel;
-    var api = context.api;
+    var api = com.wwr.echarts.service;
     var payload = context.payload;
     // ???! remove updateView updateVisual
     var progressiveRender = seriesModel.pipelineContext.progressiveRender;
@@ -24179,7 +24179,7 @@ var progressMethodMap = {
     incrementalPrepareRender: {
         progress: function (params, context) {
             context.view.incrementalRender(
-                params, context.model, context.ecModel, context.api, context.payload
+                params, context.model, context.ecModel, com.wwr.echarts.service, context.payload
             );
         }
     },
@@ -24191,7 +24191,7 @@ var progressMethodMap = {
         forceFirstProgress: true,
         progress: function (params, context) {
             context.view.render(
-                context.model, context.ecModel, context.api, context.payload
+                context.model, context.ecModel, com.wwr.echarts.service, context.payload
             );
         }
     }
@@ -25255,7 +25255,7 @@ function createOverallStageTask(scheduler, stageHandler, stageHandlerRecord, ecM
 
 function overallTaskReset(context) {
     context.overallReset(
-        context.ecModel, context.api, context.payload
+        context.ecModel, com.wwr.echarts.service, context.payload
     );
 }
 
@@ -25274,7 +25274,7 @@ function stubOnDirty() {
 
 function seriesTaskPlan(context) {
     return context.plan && context.plan(
-        context.model, context.ecModel, context.api, context.payload
+        context.model, context.ecModel, com.wwr.echarts.service, context.payload
     );
 }
 
@@ -25283,7 +25283,7 @@ function seriesTaskReset(context) {
         context.data.clearAllVisual();
     }
     var resetDefines = context.resetDefines = normalizeToArray(context.reset(
-        context.model, context.ecModel, context.api, context.payload
+        context.model, context.ecModel, com.wwr.echarts.service, context.payload
     ));
     return resetDefines.length > 1
         ? map(resetDefines, function (v, idx) {
@@ -26701,7 +26701,7 @@ echartsProto._onframe = function () {
             // each frame is not a good user experience. So we follow the rule that
             // the extent of the coordinate system is determin in the first frame (the
             // frame is executed immedietely after task reset.
-            // this._coordSysMgr.update(ecModel, api);
+            // this._coordSysMgr.update(ecModel, service);
 
             // console.log('--- ec frame visual ---', remainTime);
             scheduler.performVisualTasks(ecModel);
@@ -27292,7 +27292,7 @@ var updateMethods = {
         );
 
         // Currently, not call render of components. Geo render cost a lot.
-        // renderComponents(ecIns, ecModel, api, payload, componentDirtyList);
+        // renderComponents(ecIns, ecModel, service, payload, componentDirtyList);
         renderSeries(ecIns, ecModel, api, payload, seriesDirtyMap);
 
         performPostUpdateFuncs(ecModel, this._api);
@@ -27814,14 +27814,14 @@ function prepareView(ecIns, type, ecModel, scheduler) {
 //  * @param {string} taskBaseTag
 //  * @private
 //  */
-// function startVisualEncoding(ecIns, ecModel, api, payload, layoutFilter) {
+// function startVisualEncoding(ecIns, ecModel, service, payload, layoutFilter) {
 //     each(visualFuncs, function (visual, index) {
 //         var isLayout = visual.isLayout;
 //         if (layoutFilter == null
 //             || (layoutFilter === false && !isLayout)
 //             || (layoutFilter === true && isLayout)
 //         ) {
-//             visual.func(ecModel, api, payload);
+//             visual.func(ecModel, service, payload);
 //         }
 //     });
 // }
@@ -43235,7 +43235,7 @@ extendChartView({
 registerVisual(visualSymbol('scatter', 'circle'));
 registerLayout(pointsLayout('scatter'));
 
-// echarts.registerProcessor(function (ecModel, api) {
+// echarts.registerProcessor(function (ecModel, service) {
 //     ecModel.eachSeriesByType('scatter', function (seriesModel) {
 //         var data = seriesModel.getData();
 //         var coordSys = seriesModel.coordinateSystem;
@@ -43243,7 +43243,7 @@ registerLayout(pointsLayout('scatter'));
 //             return;
 //         }
 //         var startPt = coordSys.pointToData([0, 0]);
-//         var endPt = coordSys.pointToData([api.getWidth(), api.getHeight()]);
+//         var endPt = coordSys.pointToData([service.getWidth(), service.getHeight()]);
 
 //         var dims = zrUtil.map(coordSys.dimensions, function (dim) {
 //             return data.mapDimension(dim);
@@ -50394,7 +50394,7 @@ extendChartView({
                 return;
             }
 
-            this.api.dispatchAction({
+            com.wwr.echarts.service.dispatchAction({
                 type: 'treemapMove',
                 from: this.uid,
                 seriesId: this.seriesModel.id,
@@ -50444,7 +50444,7 @@ extendChartView({
 
             rect.applyTransform(m);
 
-            this.api.dispatchAction({
+            com.wwr.echarts.service.dispatchAction({
                 type: 'treemapRender',
                 from: this.uid,
                 seriesId: this.seriesModel.id,
@@ -50544,7 +50544,7 @@ extendChartView({
      * @private
      */
     _zoomToNode: function (targetInfo) {
-        this.api.dispatchAction({
+        com.wwr.echarts.service.dispatchAction({
             type: 'treemapZoomToNode',
             from: this.uid,
             seriesId: this.seriesModel.id,
@@ -50556,7 +50556,7 @@ extendChartView({
      * @private
      */
     _rootToNode: function (targetInfo) {
-        this.api.dispatchAction({
+        com.wwr.echarts.service.dispatchAction({
             type: 'treemapRootToNode',
             from: this.uid,
             seriesId: this.seriesModel.id,
@@ -58920,7 +58920,7 @@ var AxisView$2 = extendComponentView({
     // /**
     //  * @override
     //  */
-    // updateVisual: function (axisModel, ecModel, api, payload) {
+    // updateVisual: function (axisModel, ecModel, service, payload) {
     //     this._brushController && this._brushController
     //         .updateCovers(getCoverInfoList(axisModel));
     // },
@@ -70233,7 +70233,7 @@ var prepareGeo = function (coordSys) {
             coord: function (data) {
                 // do not provide "out" and noRoam param,
                 // Compatible with this usage:
-                // echarts.util.map(item.points, api.coord)
+                // echarts.util.map(item.points, service.coord)
                 return coordSys.dataToPoint(data);
             },
             size: bind(dataToCoordSize$1, coordSys)
@@ -70438,7 +70438,7 @@ var GROUP_DIFF_PREFIX = 'e\0\0';
  * required by the module `custom`.
  *
  * prepareInfoForCustomSeries {Function}: optional
- *     @return {Object} {coordSys: {...}, api: {
+ *     @return {Object} {coordSys: {...}, service: {
  *         coord: function (data, clamp) {}, // return point in global.
  *         size: function (dataSize, dataItem) {} // return size of each axis in coordSys.
  *     }}
@@ -70758,7 +70758,7 @@ function makeRenderItem(customSeries, data, ecModel, api) {
         barLayout: barLayout,
         currentSeriesIndices: currentSeriesIndices,
         font: font
-    }, prepareResult.api || {});
+    }, com.wwr.echarts.service || {});
 
     var userParams = {
         // The life cycle of context: current round of rendering.
@@ -70773,7 +70773,7 @@ function makeRenderItem(customSeries, data, ecModel, api) {
         encode: wrapEncodeDef(customSeries.getData())
     };
 
-    // Do not support call `api` asynchronously without dataIndexInside input.
+    // Do not support call `service` asynchronously without dataIndexInside input.
     var currDataIndexInside;
     var currDirty = true;
     var currItemModel;
@@ -70796,7 +70796,7 @@ function makeRenderItem(customSeries, data, ecModel, api) {
         );
     };
 
-    // Do not update cache until api called.
+    // Do not update cache until service called.
     function updateCache(dataIndexInside) {
         dataIndexInside == null && (dataIndexInside = currDataIndexInside);
         if (currDirty) {
@@ -70824,7 +70824,7 @@ function makeRenderItem(customSeries, data, ecModel, api) {
      * By default, `visual` is applied to style (to support visualMap).
      * `visual.color` is applied at `fill`. If user want apply visual.color on `stroke`,
      * it can be implemented as:
-     * `api.style({stroke: api.visual('color'), fill: null})`;
+     * `service.style({stroke: service.visual('color'), fill: null})`;
      * @public
      * @param {Object} [extra]
      * @param {number} [dataIndexInside=currDataIndexInside]
@@ -77995,7 +77995,7 @@ extendComponentView({
         // emits the same params with the last drag move event, and
         // may have some delay when using touch pad, which makes
         // animation not smooth (when using debounce).
-        (!opt.isEnd || opt.removeOnClick) && this.api.dispatchAction({
+        (!opt.isEnd || opt.removeOnClick) && com.wwr.echarts.service.dispatchAction({
             type: 'brush',
             brushId: modelId,
             areas: clone(areas),
@@ -78163,7 +78163,7 @@ Brush.defaultOption = {
 
 var proto$3 = Brush.prototype;
 
-// proto.updateLayout = function (featureModel, ecModel, api) {
+// proto.updateLayout = function (featureModel, ecModel, service) {
 /* eslint-disable */
 proto$3.render =
 /* eslint-enable */
@@ -78296,7 +78296,7 @@ var PROXIMATE_ONE_DAY = 86400000;
  *
  * @param {Object} calendarModel calendarModel
  * @param {Object} ecModel       ecModel
- * @param {Object} api           api
+ * @param {Object} api           service
  */
 function Calendar(calendarModel, ecModel, api) {
     this._model = calendarModel;
@@ -82207,7 +82207,7 @@ var InsideZoomView = DataZoomView.extend({
      * @override
      */
     dispose: function () {
-        unregister$1(this.api, this.dataZoomModel.id);
+        unregister$1(com.wwr.echarts.service, this.dataZoomModel.id);
         InsideZoomView.superApply(this, 'dispose', arguments);
         this._range = null;
     }
@@ -84049,7 +84049,7 @@ var ContinuousView = VisualMapView.extend({
         var itemSize = visualMapModel.itemSize;
         var orient = this._orient;
         var useHandle = this._useHandle;
-        var itemAlign = getItemAlign(visualMapModel, this.api, itemSize);
+        var itemAlign = getItemAlign(visualMapModel, com.wwr.echarts.service, itemSize);
         var barGroup = shapes.barGroup = this._createBarGroup(itemAlign);
 
         // Bar
@@ -84184,7 +84184,7 @@ var ContinuousView = VisualMapView.extend({
 
         // dragEnd do not dispatch action when realtime.
         if (isEnd === !this.visualMapModel.get('realtime')) { // jshint ignore:line
-            this.api.dispatchAction({
+            com.wwr.echarts.service.dispatchAction({
                 type: 'selectDataRange',
                 from: this.uid,
                 visualMapId: this.visualMapModel.id,
@@ -84496,7 +84496,7 @@ var ContinuousView = VisualMapView.extend({
      * @private
      */
     _enableHoverLinkFromSeries: function () {
-        var zr = this.api.getZr();
+        var zr = com.wwr.echarts.service.getZr();
 
         if (this.visualMapModel.option.hoverLink) {
             zr.on('mouseover', this._hoverLinkFromSeriesMouseOver, this);
@@ -84620,7 +84620,7 @@ var ContinuousView = VisualMapView.extend({
     _clearHoverLinkFromSeries: function () {
         this._hideIndicator();
 
-        var zr = this.api.getZr();
+        var zr = com.wwr.echarts.service.getZr();
         zr.off('mouseover', this._hoverLinkFromSeriesMouseOver);
         zr.off('mouseout', this._hideIndicator);
     },
@@ -84640,7 +84640,7 @@ var ContinuousView = VisualMapView.extend({
      * @private
      */
     _dispatchHighDown: function (type, batch) {
-        batch && batch.length && this.api.dispatchAction({
+        batch && batch.length && com.wwr.echarts.service.dispatchAction({
             type: type,
             batch: batch
         });
@@ -85416,7 +85416,7 @@ var PiecewiseVisualMapView = VisualMapView.extend({
         function onHoverLink(method) {
             var visualMapModel = this.visualMapModel;
 
-            visualMapModel.option.hoverLink && this.api.dispatchAction({
+            visualMapModel.option.hoverLink && com.wwr.echarts.service.dispatchAction({
                 type: method,
                 batch: convertDataIndex(
                     visualMapModel.findTargetDataIndices(pieceIndex)
@@ -85434,7 +85434,7 @@ var PiecewiseVisualMapView = VisualMapView.extend({
 
         if (modelOption.orient === 'vertical') {
             return getItemAlign(
-                visualMapModel, this.api, visualMapModel.itemSize
+                visualMapModel, com.wwr.echarts.service, visualMapModel.itemSize
             );
         }
         else { // horizontal, most case left unless specifying right.
@@ -85530,7 +85530,7 @@ var PiecewiseVisualMapView = VisualMapView.extend({
             selected[newKey] = !selected[newKey];
         }
 
-        this.api.dispatchAction({
+        com.wwr.echarts.service.dispatchAction({
             type: 'selectDataRange',
             from: this.uid,
             visualMapId: this.visualMapModel.id,
@@ -86125,11 +86125,11 @@ MarkerView.extend({
 
     type: 'markPoint',
 
-    // updateLayout: function (markPointModel, ecModel, api) {
+    // updateLayout: function (markPointModel, ecModel, service) {
     //     ecModel.eachSeries(function (seriesModel) {
     //         var mpModel = seriesModel.markPointModel;
     //         if (mpModel) {
-    //             updateMarkerLayout(mpModel.getData(), seriesModel, api);
+    //             updateMarkerLayout(mpModel.getData(), seriesModel, service);
     //             this.markerGroupMap.get(seriesModel.id).updateLayout(mpModel);
     //         }
     //     }, this);
@@ -86510,7 +86510,7 @@ MarkerView.extend({
 
     type: 'markLine',
 
-    // updateLayout: function (markLineModel, ecModel, api) {
+    // updateLayout: function (markLineModel, ecModel, service) {
     //     ecModel.eachSeries(function (seriesModel) {
     //         var mlModel = seriesModel.markLineModel;
     //         if (mlModel) {
@@ -86519,8 +86519,8 @@ MarkerView.extend({
     //             var toData = mlModel.__to;
     //             // Update visual and layout of from symbol and to symbol
     //             fromData.each(function (idx) {
-    //                 updateSingleMarkerEndLayout(fromData, idx, true, seriesModel, api);
-    //                 updateSingleMarkerEndLayout(toData, idx, false, seriesModel, api);
+    //                 updateSingleMarkerEndLayout(fromData, idx, true, seriesModel, service);
+    //                 updateSingleMarkerEndLayout(toData, idx, false, seriesModel, service);
     //             });
     //             // Update layout of line
     //             mlData.each(function (idx) {
@@ -86937,14 +86937,14 @@ MarkerView.extend({
 
     type: 'markArea',
 
-    // updateLayout: function (markAreaModel, ecModel, api) {
+    // updateLayout: function (markAreaModel, ecModel, service) {
     //     ecModel.eachSeries(function (seriesModel) {
     //         var maModel = seriesModel.markAreaModel;
     //         if (maModel) {
     //             var areaData = maModel.getData();
     //             areaData.each(function (idx) {
     //                 var points = zrUtil.map(dimPermutations, function (dim) {
-    //                     return getSingleMarkerEndPoint(areaData, idx, dim, seriesModel, api);
+    //                     return getSingleMarkerEndPoint(areaData, idx, dim, seriesModel, service);
     //                 });
     //                 // Layout
     //                 areaData.setItemLayout(idx, points);
@@ -88219,7 +88219,7 @@ TimelineView.extend({
 
     _handlePlayClick: function (nextState) {
         this._clearTimer();
-        this.api.dispatchAction({
+        com.wwr.echarts.service.dispatchAction({
             type: 'timelinePlayChange',
             playState: nextState,
             from: this.uid
@@ -88318,7 +88318,7 @@ TimelineView.extend({
             nextIndex = currentIndex - 1;
         }
 
-        this.api.dispatchAction({
+        com.wwr.echarts.service.dispatchAction({
             type: 'timelineChange',
             currentIndex: nextIndex,
             from: this.uid
@@ -88763,9 +88763,9 @@ extendComponentView({
         });
     },
 
-    // updateLayout: function (toolboxModel, ecModel, api, payload) {
+    // updateLayout: function (toolboxModel, ecModel, service, payload) {
     //     zrUtil.each(this._features, function (feature) {
-    //         feature.updateLayout && feature.updateLayout(feature.model, ecModel, api, payload);
+    //         feature.updateLayout && feature.updateLayout(feature.model, ecModel, service, payload);
     //     });
     // },
 
@@ -89822,7 +89822,7 @@ var handlers$1 = {
     zoom: function () {
         var nextActive = !this._isZoomActive;
 
-        this.api.dispatchAction({
+        com.wwr.echarts.service.dispatchAction({
             type: 'takeGlobalCursor',
             key: 'dataZoomSelect',
             dataZoomSelectActive: nextActive

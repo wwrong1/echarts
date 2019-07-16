@@ -2,11 +2,10 @@ package com.wwr.echarts;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.wwr.echarts.api.ChartDataService;
-import com.wwr.echarts.api.GetChartService;
+import com.wwr.echarts.service.ChartDataService;
+import com.wwr.echarts.service.GetChartService;
 import com.wwr.echarts.mapper.ChartMapper;
 import com.wwr.echarts.mapper.ChartOptionMapper;
-import com.wwr.echarts.model.Chart;
 import com.wwr.echarts.model.ChartData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,7 +69,7 @@ public class MapperTest {
 //        chartMapper.delete(1);
 //        System.out.println(chartMapper.getOne(1));
 
-//        String s = getChartService.queryChart("test3");
+//        String s = getChartService.queryCharts("test3");
 //        System.out.println(s);
 //
 //        System.out.println(chartMapper.getOne(1).getSql_str());

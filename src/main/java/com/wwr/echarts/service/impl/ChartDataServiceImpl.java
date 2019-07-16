@@ -1,6 +1,6 @@
-package com.wwr.echarts.impl;
+package com.wwr.echarts.service.impl;
 
-import com.wwr.echarts.api.ChartDataService;
+import com.wwr.echarts.service.ChartDataService;
 import com.wwr.echarts.mapper.ChartDataMapper;
 import com.wwr.echarts.model.ChartData;
 import org.springframework.beans.factory.annotation.Autowired;
