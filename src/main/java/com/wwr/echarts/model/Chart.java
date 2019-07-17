@@ -11,22 +11,41 @@ public class Chart {
     private String sql_str;
     private String title;
     private String type;
+    private String bar_name;
 
     //要求存入数据库中的X轴的参数之间有且只有一个空格分隔开
-    private String xAxis;
+    private String x_axis;
 
     private String remake;
 
     public Chart() {
     }
 
-    public Chart( String org, String sql_str, String title, String type, String xAxis, String remake) {
+    public Chart(String org, String sql_str, String title, String type, String x_axis, String barname, String remake) {
         this.org = org;
         this.sql_str = sql_str;
         this.title = title;
         this.type = type;
-        this.xAxis = xAxis;
+        this.bar_name = barname;
+        this.x_axis = x_axis;
         this.remake = remake;
+    }
+
+    public Chart(String org, String sql_str, String title, String type, String x_axis, String remake) {
+        this.org = org;
+        this.sql_str = sql_str;
+        this.title = title;
+        this.type = type;
+        this.x_axis = x_axis;
+        this.remake = remake;
+    }
+
+    public String getBar_name() {
+        return bar_name;
+    }
+
+    public void setBar_name(String bar_name) {
+        this.bar_name = bar_name;
     }
 
     public int getId() {
@@ -69,12 +88,12 @@ public class Chart {
         this.type = type;
     }
 
-    public String getxAxis() {
-        return xAxis;
+    public String getX_axis() {
+        return x_axis;
     }
 
-    public void setxAxis(String xAxis) {
-        this.xAxis = xAxis;
+    public void setX_axis(String x_axis) {
+        this.x_axis = x_axis;
     }
 
     public String getRemake() {
@@ -88,8 +107,8 @@ public class Chart {
     @Override
     public String toString() {
 
-        String str = "id:"+this.id+", org:"+this.org+", sql_str:"+this.sql_str +", title:"+this.title+", type:"+this.type+
-                ", xAxis:"+this.xAxis+", remake:"+this.remake+"\n";
+        String str = "id:"+this.id+", org:"+this.org+", title:"+this.title+", type:"+this.type+
+                ", x_axis:"+this.x_axis +", bar_name:"+this.bar_name +", sql_str:"+this.sql_str +", remake:"+this.remake+"\n";
         return str;
     }
 }

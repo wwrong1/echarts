@@ -73,7 +73,7 @@ public class MapperTest {
 //        System.out.println(s);
 //
 //        System.out.println(chartMapper.getOne(1).getSql_str());
-        System.out.println(getChartService.saveChart("test4","test4","test","test","test","test"));
+//        System.out.println(getChartService.saveChart("test4","test4","test","test","test","test"));
 
     }
 

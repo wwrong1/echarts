@@ -9,8 +9,8 @@
 <mapper namespace="com.wwr.echarts.mapper.ChartMapper">
 
     <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="Chart">
-    insert into chart(org,sql_str,title,type,xAxis,remake)
-    values(#{org},#{sql_str},#{title},#{type},#{xAxis},#{remake})
+    insert into chart(org,sql_str,title,type,x_axis,bar_name,remake)
+    values(#{org},#{sql_str},#{title},#{type},#{x_axis},#{bar_name},#{remake})
     </insert>
 
 </mapper>

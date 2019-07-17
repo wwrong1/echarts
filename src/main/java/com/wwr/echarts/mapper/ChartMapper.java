@@ -19,10 +19,10 @@ public interface ChartMapper {
     @Select("SELECT * FROM chart WHERE id = #{id}")
     Chart getOne(int id);
 
-    @Insert("INSERT INTO chart (org,sql_str,title,type,xAxis,remake) VALUES(#{org},#{sql_str},#{title},#{type},#{xAxis},#{remake})")
+    @Insert("INSERT INTO chart (org,sql_str,title,type,x_axis,bar_name,remake) VALUES(#{org},#{sql_str},#{title},#{type},#{x_axis},#{bar_name},#{remake})")
     void insert(Chart chart);
 
-    @Update("UPDATE chart SET org=#{org},sql_str=#{sql},title=#{title},type=#{type},xAxis=#{xAxis},remake=#{remake} WHERE id =#{id}")
+    @Update("UPDATE chart SET org=#{org},sql_str=#{sql},title=#{title},type=#{type},x_axis=#{x_axis},bar_name=#{bar_name},remake=#{remake} WHERE id =#{id}")
     void update(Chart chart);
 
     @Delete("DELETE FROM chart WHERE id =#{id}")
