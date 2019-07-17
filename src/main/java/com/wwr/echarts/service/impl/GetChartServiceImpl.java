@@ -34,6 +34,7 @@ public class GetChartServiceImpl implements GetChartService {
         //获取x轴上的参数并将其拼接成特定格式的字符串
         String[] xAxisList =chart.getxAxis().split(" ");
         String xAxisStr="";
+
         for(String i: xAxisList){
             xAxisStr+="\""+i+"\""+",";
         }
@@ -45,18 +46,21 @@ public class GetChartServiceImpl implements GetChartService {
         //给图表赋予标题
         option_str.insert(option_str.indexOf("text:")+6,title);
         //给图表传入数据
+        String data = "";
         if(type.equals("pie")) {
-            String data = "";
+
             for (int i = 0; i < 4; i++) {
                 data += "[\'"+xAxisList[i]+"\',"+dataList.get(i).getY()+"],";
             }
+
             option_str.insert(option_str.indexOf("source")+8,data);
         }
         else{
-            String data = "";
+
             for (int i = 0; i < 4; i++) {
                 data += dataList.get(i).toString();
             }
+
             option_str.insert(option_str.indexOf(",data: [") + 8, data);
             option_str.insert(option_str.indexOf("xAxis:{data: [")+14,xAxisStr);
 
