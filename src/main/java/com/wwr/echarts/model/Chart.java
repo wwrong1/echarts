@@ -1,5 +1,10 @@
 package com.wwr.echarts.model;
 
+/**
+ * @author wwr
+ * @Description  图数据实体类
+ * @date 2019/7/17
+ */
 public class Chart {
     private int id;
     private String org;

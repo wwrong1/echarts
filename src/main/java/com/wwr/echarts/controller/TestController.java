@@ -1,6 +1,5 @@
 package com.wwr.echarts.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.wwr.echarts.service.GetChartService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +20,32 @@ public class TestController {
     @ApiOperation(value="查看图表入口", notes="输入id以查看生成的图表")
     @RequestMapping(value="/testEcharts/{id}", method = RequestMethod.GET)
     public ModelAndView test(/**HttpServletRequest request**/@PathVariable("id")  int id){
-//        model.addAttribute("url","/getOption/45/bar");
+
         ModelAndView mav = new ModelAndView("test");
-//        request.setAttribute("url","/getOption/45/bar");
-        mav.addObject("url","/getOption/"+id);
+        mav.addObject("option",getChartService.getChartJson(id));
         return mav;
+
+    }
+
+    /**将url传到前台，利用ajax访问方法的写法
+//    @RequestMapping(value="/testEcharts/{id}", method = RequestMethod.GET)
+//    public ModelAndView test(HttpServletRequest request,Model model@PathVariable("id")  int id){
+//
+//     (1)ModelAndView mav = new ModelAndView("test");
+//        mav.addObject("url","/getOption/"+id);
+//        return mav;
+
+//     (2)request.setAttribute("url","/getOption/45/bar");
+//        model.addAttribute("url","/getOption/"+id);
 //        return "test";
-    }
+//    }
 
-    @RequestMapping(value="/getOption/{id}",method = RequestMethod.GET)
-    @ResponseBody
-    public JSONObject getOption(@PathVariable("id")  int id){
-        return getChartService.getChartJson(id);
-    }
-
+//    @RequestMapping(value="/getOption/{id}",method = RequestMethod.GET)
+//    @ResponseBody
+//    public JSONObject getOption(@PathVariable("id")  int id){
+//        return getChartService.getChartJson(id);
+//    }
+**/
 
     @ApiOperation(value="保存chart数据", notes="输入所需数据，包括组织，sql语句（根据xAxis查询），图表的名字，" +
             "图表类型（pie,bar,line,scatter）,所定义的要展示的数据列名（即在二维图中的x轴数据，注意：程序需要列名之间有且只有一个空格隔开！！），图的备注信息")
@@ -51,10 +62,8 @@ public class TestController {
     @RequestMapping(value="/queryCharts/{org}", method=RequestMethod.GET )
     @ResponseBody
     public String queryCharts(@PathVariable("org") String org){
-
         String s = getChartService.queryCharts(org);
         return s;
-
     }
 
 

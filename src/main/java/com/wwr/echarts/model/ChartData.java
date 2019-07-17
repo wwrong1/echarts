@@ -1,5 +1,11 @@
 package com.wwr.echarts.model;
 
+
+/**
+ * @author wwr
+ * @Description  模拟的数据类
+ * @date 2019/7/17
+ */
 public class ChartData {
     private int x;
     private int y;

@@ -1,5 +1,11 @@
 package com.wwr.echarts.model;
 
+
+/**
+ * @author wwr
+ * @Description  图的配置项实体类
+ * @date 2019/7/17
+ */
 public class ChartOption {
     private int id;
     private String type;
