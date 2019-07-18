@@ -47,18 +47,22 @@ public class TestController {
 //    }
 **/
 
-    @ApiOperation(value="保存chart数据", notes="输入所需数据，包括组织，sql语句（根据xAxis查询），图表的名字，" +
-            "图表类型（pie,bar,line,scatter）,所定义的要展示的数据列名（即在二维图中的x轴数据，注意：程序需要列名之间有且只有一个空格隔开！！），图的备注信息")
-    @RequestMapping(value = "/saveChart/{org}/{sql}/{title}/{type}/{xAxis}/{bar_name}/{remake}",method = RequestMethod.GET)
+    @ApiOperation(value="保存chart数据", notes="输入所需数据，包括①org组织，②title图表的名字，" +
+            "③type图表类型（pie,bar,bar2(横着显示的条形图),line,scatter）,④xAxis所定义的要展示的数据列名（即在二维图中的x轴" +
+            "数据，注意：程序需要列名之间有且只有一个空格隔开！！），⑤bar_name每列要展示的bar的名字（例如年份，性别等信息），" +
+            "⑥sql语句（根据xAxis查询），⑦remake图的备注信息")
+    @RequestMapping(value = "/saveChart/{org}/{title}/{type}/{xAxis}/{bar_name}/{sql}/{remake}",method = RequestMethod.GET)
     @ResponseBody
-    public int saveChart(@PathVariable("org")String org,@PathVariable("sql")String sql,@PathVariable("title")String title,
-                         @PathVariable("type")String type,@PathVariable("xAxis")String xAxis,@PathVariable("bar_name") String bar_name,@PathVariable("remake") String remake){
+    public int saveChart(@PathVariable("org")String org,@PathVariable("title")String title,
+                         @PathVariable("type")String type,@PathVariable("xAxis")String xAxis,
+                         @PathVariable("bar_name") String bar_name,@PathVariable("sql")String sql,
+                         @PathVariable("remake") String remake){
 
         int id = getChartService.saveChart(org,sql,title,type,xAxis,bar_name,remake);
         return id;
     }
 
-    @ApiOperation(value="查看chart表中的数据项", notes="可以根据自己设置的备注，找到需要展示的图的id")
+    @ApiOperation(value="查看chart表中的数据项", notes="输入组织代码，查看本组织所有的数据项，可以根据自己设置的备注，找到需要展示的图的id")
     @RequestMapping(value="/queryCharts/{org}", method=RequestMethod.GET )
     @ResponseBody
     public String queryCharts(@PathVariable("org") String org){

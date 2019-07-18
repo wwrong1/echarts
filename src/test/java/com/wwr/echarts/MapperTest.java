@@ -2,11 +2,10 @@ package com.wwr.echarts;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.wwr.echarts.service.ChartDataService;
+import com.wwr.echarts.api.ChartDataApi;
 import com.wwr.echarts.service.GetChartService;
 import com.wwr.echarts.mapper.ChartMapper;
 import com.wwr.echarts.mapper.ChartOptionMapper;
-import com.wwr.echarts.model.ChartData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class MapperTest {
     private GetChartService getChartService;
 
     @Autowired
-    private ChartDataService chartDataService;
+    private ChartDataApi chartDataApi;
 
     @Autowired
     private ChartOptionMapper chartOptionMapper;
@@ -33,13 +32,6 @@ public class MapperTest {
     private ChartMapper chartMapper;
 
 
-    @Test
-    public void testGetAll(){
-        List<ChartData> list = chartDataService.getAllChartData();
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).toString());
-        }
-    }
 
     @Test
     public void test(){
@@ -77,6 +69,17 @@ public class MapperTest {
 
     }
 
-
+    @Test
+    public void chartDataApi(){
+        String [][] source = chartDataApi.getAllChartData("select x,y from chart_data where x=1");
+        String s="";
+        for (int i=0;i<source.length;i++){
+            for (int j=0;j<source[i].length;j++){
+                s+=source[i][j]+",";
+            }
+            s+="\n";
+        }
+        System.out.println(s);
+    }
 
 }
