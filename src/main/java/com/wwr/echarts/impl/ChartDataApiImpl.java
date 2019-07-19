@@ -12,7 +12,6 @@ import java.util.List;
 @Component
 public class ChartDataApiImpl implements ChartDataApi {
 
-
     @PersistenceContext
     private EntityManager em;
 
@@ -47,6 +46,5 @@ public class ChartDataApiImpl implements ChartDataApi {
             return null;
         }
     }
-
 
 }
