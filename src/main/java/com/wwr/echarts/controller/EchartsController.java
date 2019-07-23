@@ -48,8 +48,8 @@ public class EchartsController {
 **/
 
     @ApiOperation(value="保存chart数据", notes="输入所需数据，包括①org组织，②title图表的名字，" +
-            "③type图表类型（pie,bar,bar2(横着显示的条形图),line,scatter）,④xAxis所定义的要展示的数据列名（即在二维图中的x轴" +
-            "数据，注意：程序需要列名之间有且只有一个空格隔开！！），⑤bar_name每列要展示的bar的名字,饼状图填null（例如年份，性别等信息），" +
+            "③type图表类型（pie,bar,bar2(横着显示的条形图),line,scatter）,④xAxis所定义的要展示的数据列名（即在二维图中的x轴，如某个银行某个产品）" +
+            "数据，注意：程序需要列名之间有且只有一个/隔开！！），⑤bar_name每列要展示的bar的名字,饼状图填null（例如年份，性别等信息，也用/隔开），" +
             "⑥sql语句（根据xAxis查询），⑦remake图的备注信息")
     @RequestMapping(value = "/saveChart/{org}/{title}/{type}/{xAxis}/{bar_name}/{sql}/{remake}",method = RequestMethod.GET)
     @ResponseBody

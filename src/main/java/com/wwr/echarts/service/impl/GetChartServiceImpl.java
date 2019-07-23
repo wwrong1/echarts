@@ -33,9 +33,10 @@ public class GetChartServiceImpl implements GetChartService {
         String title = chart.getTitle();
         String sql = chart.getSql_str();
 
-        String [] bList = chart.getBar_name().split("/");
+        String [] bList = chart.getBar_name().split("\\|");
         //获取x轴上的参数并将其拼接成特定格式的字符串
-        String[] xAxisList =chart.getX_axis().split("/");
+        String[] xAxisList =chart.getX_axis().split("\\|");
+
         System.out.println("++++++++++"+xAxisList.length);
         //获取图数据
 

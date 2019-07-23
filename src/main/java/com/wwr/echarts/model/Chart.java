@@ -106,7 +106,6 @@ public class Chart {
 
     @Override
     public String toString() {
-
         String str = "id:"+this.id+", org:"+this.org+", title:"+this.title+", type:"+this.type+
                 ", x_axis:"+this.x_axis +", bar_name:"+this.bar_name +", sql_str:"+this.sql_str +", remake:"+this.remake+"\n";
         return str;

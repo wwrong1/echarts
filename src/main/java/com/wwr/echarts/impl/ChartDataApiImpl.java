@@ -17,13 +17,14 @@ public class ChartDataApiImpl implements ChartDataApi {
 
     @Override
     public String[][] getAllChartData(String sql) {
-        return executeSQl(sql);
+        return executeSql(sql);
     }
 
-    public String[][] executeSQl(String sql){
+    public String[][] executeSql(String sql){
         Query query = em.createNativeQuery(sql);
         List list = query.getResultList();
         try{
+            //获取到二维数据时
             Object[] cells = (Object[])list.get(0);
             String [][] source = new String[cells.length][list.size()];
             for (int i=0;i<list.size();i++){
@@ -34,6 +35,7 @@ public class ChartDataApiImpl implements ChartDataApi {
             }
             return source;
         }catch (ClassCastException e){
+            //获取到一维数组时
             String[][] source = new String[1][list.size()];
             for (int i = 0; i < list.size(); i++) {
                 Object cell = list.get(i);
