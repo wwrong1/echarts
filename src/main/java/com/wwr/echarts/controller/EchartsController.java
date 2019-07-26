@@ -18,7 +18,7 @@ public class EchartsController {
     private GetChartService getChartService;
 
     @ApiOperation(value="查看图表入口", notes="输入id以查看生成的图表")
-    @RequestMapping(value="/Echarts/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/getChart/{id}", method = RequestMethod.GET)
     public ModelAndView test(/**HttpServletRequest request**/@PathVariable("id")  int id){
 
         ModelAndView mav = new ModelAndView("echarts");

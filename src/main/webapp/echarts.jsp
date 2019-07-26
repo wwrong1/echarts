@@ -5,10 +5,8 @@
 <head>
     <title>ECharts</title>
     <!-- 引入 echarts.js -->
-    <script type="text/javascript" src="/js/echarts.js"></script>
-    <script src="/js/echarts-gl.js"></script>
-    <script src="http://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/echarts.min.js"></script>
+
 
 </head>
 <body>
